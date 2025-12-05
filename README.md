@@ -8,7 +8,7 @@ Kullanıcıların kendi sanal AI çalışanlarını (ajanlarını) oluşturması
 
   * **🔐 Çoklu Kullanıcı Sistemi:** Güvenli giriş ve kayıt sistemi (SHA-256 şifreleme). Her kullanıcının verisi izoledir.
   * **👥 Dinamik Takım Kurulumu:** İstediğiniz rol ve yetenekte (Yazılımcı, Analist, Tasarımcı vb.) sınırsız ajan oluşturun.
-  * **🧠 Çoklu Model Desteği:** GPT-4o, GPT-4.1, Gemini 1.5 Pro ve Flash modellerini aynı ekip içinde hibrit olarak kullanın.
+  * **🧠 Çoklu Model Desteği:** GPT-4o, GPT-4.1, Gemini 2.5 Pro ve Flash modellerini aynı ekip içinde hibrit olarak kullanın.
   * **📺 Canlı Terminal İzleme:** Ajanların arka planda birbirleriyle nasıl konuştuğunu, yazdıkları kodları ve hata düzeltmelerini Matrix tarzı terminalden canlı izleyin.
   * **💾 Kalıcı Hafıza (JSON DB):** Sohbetleriniz, kurduğunuz ekipler ve ayarlarınız JSON tabanlı veritabanında saklanır. Tarayıcıyı kapatsanız bile verileriniz kaybolmaz.
   * **🔄 Dinamik Akış Kontrolü:** Sohbet sırasında "Yaratıcılık" (Temperature) ayarını değiştirin veya konuşma sırasına (Otomatik/Sıralı) müdahale edin.
