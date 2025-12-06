@@ -14,66 +14,134 @@ Kullanıcıların kendi sanal AI çalışanlarını (ajanlarını) oluşturması
   * **🔄 Dinamik Akış Kontrolü:** Sohbet sırasında "Yaratıcılık" (Temperature) ayarını değiştirin veya konuşma sırasına (Otomatik/Sıralı) müdahale edin.
   * **📁 Sohbet Arşivi:** Geçmiş projelerinize tek tıkla geri dönün, kaldığınız yerden devam edin.
 
-## 🛠️ Kurulum
+Harika bir fikir. Ortaya profesyonel bir SaaS ürünü çıkardık, buna yakışır profesyonel bir **Kullanım ve Kurulum Rehberi** hazırladım.
 
-Projeyi yerel bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyin:
+Bu metni projenin ana klasörüne `GUIDE.md` veya `REHBER.md` olarak kaydedebilir veya GitHub'daki `README.md` dosyasının altına ekleyebilirsin.
 
-### 1\. Repoyu Klonlayın
+-----
+
+# 📘 ORCHESTR AI - Kullanım ve Kurulum Rehberi
+
+**ORCHESTR AI**, birden fazla Yapay Zeka ajanını (Agent) bir araya getirerek sanal bir çalışma ekibi kurmanızı, onları yönetmenizi ve karmaşık görevleri otonom olarak çözdürmenizi sağlayan profesyonel bir platformdur.
+
+-----
+
+## 🛠️ Bölüm 1: Kurulum (Yönetici İçin)
+
+Bu sistemi kendi bilgisayarınızda veya sunucunuzda çalıştırmak için aşağıdaki adımları izleyin.
+
+### 1\. Gereksinimler
+
+  * Python 3.10 veya üzeri
+  * OpenAI veya Google Gemini API Anahtarı
+
+### 2\. Dosya Yapısı
+
+Proje klasörünüzde şu iki dosyanın olduğundan emin olun:
+
+  * `orchestr_streamlit.py` (Ana uygulama)
+  * `utils.py` (Yardımcı fonksiyonlar ve veritabanı)
+
+### 3\. Kütüphanelerin Yüklenmesi
+
+Terminali açın ve gerekli paketleri yükleyin:
 
 ```bash
-git clone https://github.com/Yerlifan/orchestr-ai.git
-cd orchestr-ai
+pip install streamlit ag2 pyautogen
 ```
 
-### 2\. Sanal Ortam Oluşturun (Önerilen)
+### 4\. Uygulamayı Başlatma
+
+Terminalden şu komutu girin:
 
 ```bash
-python -m venv venv
-# Windows için:
-venv\Scripts\activate
-# Mac/Linux için:
-source venv/bin/activate
+streamlit run orchestr_streamlit.py
 ```
 
-### 3\. Gereksinimleri Yükleyin
+Tarayıcınızda otomatik olarak `http://localhost:8501` adresi açılacaktır.
 
-```bash
-pip install -r requirements.txt
-```
+-----
 
-*(Eğer requirements.txt dosyan yoksa şu komutu çalıştır: `pip install streamlit autogen pyautogen`)*
+## 🚀 Bölüm 2: Kullanıcı Rehberi
 
-### 4\. Uygulamayı Başlatın
+### 1\. Giriş ve Kayıt
 
-```bash
-streamlit run main.py
-```
+Sistem çok kullanıcılıdır. Her kullanıcının verisi (sohbetleri, takımları) tamamen izoledir.
 
-## 🔑 API Anahtarları
+  * **Kayıt Ol:** "Kayıt Ol" sekmesine gelin. Kullanıcı adı, şifre belirleyin ve sizi temsil edecek bir **Avatar** (🦁, 🚀 vb.) seçin.
+  * **Giriş Yap:** Bilgilerinizle sisteme giriş yapın.
 
-Sistemi kullanmak için OpenAI veya Google Gemini API anahtarlarına ihtiyacınız vardır.
+### 2\. API Anahtarlarını Tanımlama (Admin Yetkisi)
 
-  * Uygulama arayüzündeki **Sol Menü (Sidebar) -\> API Anahtarları** bölümünden anahtarlarınızı girebilirsiniz.
-  * Anahtarlarınız sadece yerel oturumunuzda kullanılır.
+Sistemin çalışması için beyin gücüne (LLM) ihtiyacı vardır.
 
-## 📂 Proje Yapısı
+1.  Sol menüde (Sidebar) en altta **"🔑 API Erişimi"** kutusunu açın.
+2.  **Admin Şifresini** girin. (Varsayılan: `yerlifan123`)
+3.  Açılan kutulara **OpenAI API Key** veya **Google Gemini API Key** yapıştırın.
+4.  Bu işlem bir kez yapılır, sistem anahtarları hatırlar.
 
-```
-orchestr-ai/
-├── main.py              # Uygulamanın ana giriş noktası (Arayüz)
-├── utils.py             # Veritabanı, Güvenlik ve Yardımcı Fonksiyonlar
-├── orchestr_db/         # Kullanıcı verilerinin tutulduğu JSON klasörü
-│   ├── users.json       # Kullanıcı hesapları
-│   └── ...              # Kullanıcıya özel sohbet ve takım dosyaları
-├── requirements.txt     # Gerekli kütüphaneler
-└── README.md            # Dokümantasyon
-```
+### 3\. Ekip Kurulumu (Install Phase)
 
-## 🚀 Kullanım Senaryoları
+Giriş yaptıktan sonra sizi boş bir ekran karşılar. Sol menüdeki **"➕ Üye Ekle"** panelini kullanın:
 
-1.  **Yazılım Geliştirme:** Bir "Senior Developer", bir "Code Reviewer" ve bir "Tester" ajanı oluşturup onlara bir Python scripti yazdırın.
-2.  **İçerik Üretimi:** Bir "SEO Uzmanı", bir "Metin Yazarı" ve bir "Editör" oluşturup blog yazısı hazırlatın.
-3.  **Veri Analizi:** Bir "Veri Bilimci" ve bir "İş Analisti" oluşturup elinizdeki verileri yorumlatın.
+  * **İsim:** Sanal çalışana bir isim verin (Örn: *Yazılımcı, Editör, Hukukçu*).
+  * **Rol:** Ona ne yapması gerektiğini söyleyin (Örn: *"Sen kıdemli bir Python uzmanısın. Hatalı kodları affetmezsin."*).
+  * **Model:** Bu ajanın hangi zekayı kullanacağını seçin (GPT-4o, Gemini 2.5 Pro vb.).
+  * **Ekle:** Butona basın.
+
+> **İpucu:** Eklediğiniz ajanları "Yukarı/Aşağı" oklarıyla sıralayabilir veya kalem ikonuna basarak özelliklerini değiştirebilirsiniz.
+
+### 4\. Sistemi Başlatma ve Sohbet
+
+Ekibiniz hazırsa sol alttaki **"🚀 BAŞLAT"** butonuna basın.
+
+  * Ajanlar kilitlenir ve "Çalışma Modu"na geçilir.
+  * Alttaki sohbet kutusuna görevinizi yazın (Örn: *"Bana Snake oyunu yapan bir Python kodu yazın."*).
+
+### 5\. 📺 Canlı Terminal (The Matrix)
+
+Siz görevi verdiğinizde, sohbet kutusunun üzerinde siyah bir **Terminal Ekranı** açılır.
+
+  * Burada ajanların arka planda birbirleriyle nasıl konuştuğunu, denedikleri kodları ve aldıkları hataları **anlık olarak** izleyebilirsiniz.
+  * İşlem bittiğinde bu ekran kapanır ve temiz sonuç sohbet balonları olarak aşağıya düşer.
+
+### 6\. Feedback (Yönlendirme)
+
+Ajanlar çalışırken veya durduklarında müdahale edebilirsiniz.
+
+  * Sohbet kutusuna yazdığınız her yeni mesaj, sisteme bir **"Feedback" (Geri Bildirim)** olarak gider.
+  * Örn: *"Renkler çok koyu olmuş, daha açık tonlar kullanın"* derseniz, ekip kaldığı yerden devam ederek kodu düzeltir.
+
+### 7\. Çoklu Proje Yönetimi
+
+Sol menüdeki **"🗂️ AI Ekiplerim"** başlığı altından:
+
+  * **➕ Yeni Ekip:** Sıfırdan temiz bir sayfa açar.
+  * **Geçmiş Listesi:** Eski projelerinize tıklayarak o anki ekibi ve konuşma geçmişini geri yüklersiniz.
+  * **Kalem İkonu:** Projenizin ismini (Örn: "Yeni Sohbet" yerine "Web Sitesi Projesi") değiştirebilirsiniz.
+
+### 8\. Canlı Ayarlar (Hot-Swap)
+
+Sistem çalışırken bile **"🎛️ Canlı Ayarlar"** panelinden:
+
+  * **Yaratıcılık (Temperature):** Ajanların ne kadar yaratıcı veya tutarlı olacağını ayarlayın.
+  * **Tur Sayısı:** Tartışmanın ne kadar süreceğini belirleyin.
+  * **Sıralama:** "Otomatik" (Yapay zeka kimin konuşacağına karar verir) veya "Sıralı" (Listeye göre sırayla konuşurlar) modunu seçin.
+
+-----
+
+## ❓ Sıkça Sorulan Sorular
+
+**S: Bilgisayarımı kapatırsam ne olur?**
+C: Sistem yerel bilgisayarınızda çalışıyorsa işlem durur. Eğer bir sunucuya (Streamlit Cloud vb.) kurduysanız arka planda çalışmaya devam eder.
+
+**S: Ajanlar yazdıkları kodu çalıştırabilir mi?**
+C: Güvenlik nedeniyle ajanların yazdığı kodlar sadece ekranda gösterilir, otomatik çalıştırılmaz (Execution: False). Kodu kopyalayıp kendi ortamınızda çalıştırmalısınız.
+
+**S: Sohbet geçmişim kaybolur mu?**
+C: Hayır. Tüm veriler `orchestr_db` klasöründe JSON formatında güvenle saklanır.
+
+-----
 
 ## 🤝 Katkıda Bulunma
 
@@ -89,6 +157,5 @@ Katkılarınızı bekliyoruz\! Lütfen önce bir "Issue" açarak tartışın, ar
 
 Bu proje MIT Lisansı ile lisanslanmıştır. Detaylar için `LICENSE` dosyasına bakın.
 
------
+**⚡ Made by Mugendai (aka Yerlifan)**
 
-**⚡ Made by Mugendai(aka Yerlifan)**
