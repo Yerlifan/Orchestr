@@ -14,10 +14,6 @@ Kullanıcıların kendi sanal AI çalışanlarını (ajanlarını) oluşturması
   * **🔄 Dinamik Akış Kontrolü:** Sohbet sırasında "Yaratıcılık" (Temperature) ayarını değiştirin veya konuşma sırasına (Otomatik/Sıralı) müdahale edin.
   * **📁 Sohbet Arşivi:** Geçmiş projelerinize tek tıkla geri dönün, kaldığınız yerden devam edin.
 
-Harika bir fikir. Ortaya profesyonel bir SaaS ürünü çıkardık, buna yakışır profesyonel bir **Kullanım ve Kurulum Rehberi** hazırladım.
-
-Bu metni projenin ana klasörüne `GUIDE.md` veya `REHBER.md` olarak kaydedebilir veya GitHub'daki `README.md` dosyasının altına ekleyebilirsin.
-
 -----
 
 # 📘 ORCHESTR AI - Kullanım ve Kurulum Rehberi
