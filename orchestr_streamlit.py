@@ -226,7 +226,7 @@ if not st.session_state.is_running:
         else: st.caption(T["no_past_agent"])
     with st.expander(f"➕ {T['add_agent']}", expanded=True):
         c1, c2, c3, c4 = st.columns([2, 3, 2, 1])
-        n = c1.text_input(T["name"], placeholder="Dev"); r = c2.text_input(T["role"]); 
+        n = c1.text_input(T["name"], placeholder="Scientist, Guide, Programmer"); r = c2.text_input(T["role"]); 
         model_options = [m["label"] for m in st.session_state.available_models]
         m = c3.selectbox(T["model"], model_options)
         if c4.button(T["add_agent"], use_container_width=True):
