@@ -1,5 +1,5 @@
 streamlit
-pyautogen
+pyautogen[gemini,openai]
 autogen
 PyPDF2
 watchdog
