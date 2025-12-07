@@ -11,6 +11,10 @@ MODELS_FILE = os.path.join(DB_FOLDER, "models.json")
 # --- GÜVENLİK ---
 ADMIN_PASSWORD = "yerlifan123"
 
+# --- SİSTEM AYARLARI ---
+# Kullanıcının chat kutusuna yazabileceği maksimum karakter sayısı
+MAX_CHAR_LIMIT = 5000 
+
 # --- AVATARLAR ---
 AVATARS = ["👨‍💻", "👩‍💻", "🚀", "🧠", "🦁", "🦉", "🦄", "🎨", "⚡", "🤖", "🔥", "💎", "🛡️", "👑", "👽", "👻", "🐯"]
 
@@ -34,7 +38,7 @@ DEFAULT_MODELS = [
 ]
 MLABS = [m["label"] for m in DEFAULT_MODELS]
 
-# --- DİL PAKETİ (SADELEŞTİRİLDİ) ---
+# --- DİL PAKETİ ---
 LANG = {
     "TR": {
         "login_header": "GİRİŞ", "login_sub": "Yapay Zeka Takım Orkestrasyonu",
@@ -43,7 +47,7 @@ LANG = {
         "new_chat": "Yeni Ekip", "my_chats": "Projelerim", "settings": "Sistem Ayarları",
         "api_access": "API Erişimi", "start_btn": "EKİBİ KUR VE BAŞLAT", 
         "stop_task": "Görevi Durdur", "stop_icon": "✖️",
-        "logout": "Çıkış", "chat_input": "Görev ver veya feedback yaz...", "feedback_label": "GERİBİLDİRİM:",
+        "logout": "Çıkış", "chat_input": "Görev ver veya feedback yaz...", "feedback_label": "YÖNLENDİRME:",
         "team_setup": "Ekip Kurulumu", "add_agent": "Üye Ekle", "name": "İsim", "role": "Rol", "model": "Model",
         "save": "Kaydet", "delete": "Sil", "active_team": "Çalışan Ekip",
         "attach": "Dosya Ekle", "file_help": "Analiz için PDF/TXT yükle.",
@@ -53,7 +57,7 @@ LANG = {
         "auto": "Otomatik", "seq": "Sıralı", "active_project": "Proje", "edit_title": "Başlığı Düzenle",
         "admin_pass": "Admin Şifresi", "lock": "Kilitle", "unlock": "Kilit Açıldı",
         "wrong_pass": "Hatalı Şifre", "no_api": "API Anahtarı Yok", "terminal": "Canlı Terminal", "working": "Çalışıyor...",
-        "our_team": "TAKIM ARKADAŞLARIMIZ", "welcome": "Hoşgeldin,",
+        "our_team": "TAKIM ARKADAŞLARIMIZ", 
         "import_title": "♻️ Geçmişten Ajan Transfer Et", "import_btn": "Transfer Et", "no_past_agent": "Geçmiş kayıt bulunamadı.",
         "model_mgmt": "Model Yönetimi", "add_model": "Yeni Model Ekle", "model_label": "Görünecek İsim",
         "model_id": "Model API ID", "model_type": "Altyapı", "add_btn": "Listeye Ekle",
@@ -67,7 +71,7 @@ LANG = {
         "login_title": "Login", "reg_title": "Register", "remember": "Remember Me",
         "new_chat": "New Team", "my_chats": "Projects", "settings": "System Settings",
         "api_access": "API Access", "start_btn": "SETUP & START TEAM", 
-        "stop_task": "Stop Task", "stop_icon": "🟥",
+        "stop_task": "Stop Task", "stop_icon": "✖️",
         "logout": "Logout", "chat_input": "Enter task...", "feedback_label": "FEEDBACK:",
         "team_setup": "Team Setup", "add_agent": "Add Member", "name": "Name", "role": "Role", "model": "Model",
         "save": "Save", "delete": "Delete", "active_team": "Active Team",
@@ -78,12 +82,11 @@ LANG = {
         "auto": "Auto", "seq": "Sequential", "active_project": "Active Project", "edit_title": "Edit Title",
         "admin_pass": "Admin Password", "lock": "Lock", "unlock": "Unlocked",
         "wrong_pass": "Wrong Password", "no_api": "No API Keys", "terminal": "Live Terminal", "working": "Working...",
-        "our_team": "OUR TEAM", "welcome": "Welcome,",
+        "our_team": "OUR TEAM", 
         "import_title": "♻️ Import Agent", "import_btn": "Import", "no_past_agent": "No history found.",
         "model_mgmt": "Model Management", "add_model": "Add New Model", "model_label": "Display Name",
         "model_id": "Model API ID", "model_type": "Provider", "add_btn": "Add to List",
         "reset_models": "Reset to Defaults", "base_url": "Base URL", "saved_models": "Saved Models",
-        # NEW
         "turn_limit": "Conversation Turns (Cycles)",
         "round_info": "📊 ROUND STATUS"
     }

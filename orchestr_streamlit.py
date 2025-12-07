@@ -13,9 +13,6 @@ import styles
 
 st.set_page_config(page_title="ORCHESTR AI", page_icon="🛡️", layout="wide")
 
-# JS SCROLL FIX
-components.html("""<script>function scrollToEnd(){const m=window.parent.document.querySelector(".main");if(m){m.scrollTo({top:m.scrollHeight,behavior:'smooth'});}}</script>""", height=0, width=0)
-
 # --- INIT ---
 defaults = {
     "logged_in": False, "username": None, "avatar": "👤",
@@ -76,7 +73,7 @@ if not st.session_state.logged_in:
                     ok, msg = db.register_user(nu, np, nav)
                     if ok: st.success(msg)
                     else: st.error(msg)
-    st.markdown('<div class="mugendai-footer">Designed by Mugendai (aka Yerlifan) ⚡</div>', unsafe_allow_html=True)
+    st.markdown('<div class="mugendai-footer">Designed by Mugendai (aka Yerlifan)⚡</div>', unsafe_allow_html=True)
     st.stop()
 
 # ==============================================================================
@@ -109,7 +106,7 @@ def del_agent(i): st.session_state.agents_config.pop(i); db.save_user_data(u, "t
 
 # Header
 ct = db.get_user_data(u, "sessions").get(st.session_state.current_session_id, {}).get("title", T["new_chat"])
-st.markdown(f"""<div class="header-container"><div><p class="header-title">O R C H E S T R</p><p class="header-sub">{T['active_project']}: {ct}</p></div><div class="user-badge">{av} {u}</div></div>""", unsafe_allow_html=True)
+st.markdown(f"""<div class="header-container"><div><p class="header-title">ORCHESTR AI</p><p class="header-sub">{T['active_project']}: {ct}</p></div><div class="user-badge">{av} {u}</div></div>""", unsafe_allow_html=True)
 with st.popover(f"✏️ {T['edit_title']}"):
     nt = st.text_input("Name", value=ct); 
     if st.button(T["save"], type="primary"): upd_title(nt)
@@ -143,19 +140,14 @@ with st.sidebar:
             if c1.button(f"{act} {sd['title'][:18]}", key=sid, use_container_width=True): load_chat(sid)
             if c2.button("✖", key=f"d_{sid}"): del_chat(sid)
 
-# --- MODEL YÖNETİMİ PANELİ (Sadece bu bloğu değiştir) ---
+    # MODEL YÖNETİMİ
     with st.expander(f"🤖 {T['model_mgmt']}", expanded=False):
-        
-        # 1. KRİTİK DÜZELTME: Selectbox FORMUN DIŞINDA olmalı
-        # Böylece seçim değiştiği an sayfa yenilenir ve alttaki if bloğu çalışır.
         new_type = st.selectbox(T["model_type"], ["openai", "google", "local", "anthropic"], key="new_model_type_selector")
         
-        # 2. Formun geri kalanı
         with st.form("add_model_form"):
             new_label = st.text_input(T["model_label"], placeholder="Örn: Local Llama 3")
             new_id = st.text_input(T["model_id"], placeholder="llama3")
             
-            # Formun içinde ama 'new_type' dışarıdan geldiği için artık anlık güncellenir
             new_base = None
             if new_type == "local":
                 st.info("Local/Ollama için adres giriniz:")
@@ -206,7 +198,7 @@ with st.sidebar:
             if n1 != curr_okey: st.session_state["OPENAI_API_KEY"] = n1
             if n2 != curr_gkey: st.session_state["GOOGLE_API_KEY"] = n2
     
-    st.markdown('<div class="mugendai-footer">Made by Mugendai ⚡</div>', unsafe_allow_html=True)
+    st.markdown('<div class="mugendai-footer">Made by Mugendai (aka Yerlifan)⚡</div>', unsafe_allow_html=True)
     st.divider()
     if st.button(f"🚪 {T['logout']}", use_container_width=True): st.session_state.clear(); st.rerun()
 
@@ -215,6 +207,7 @@ def start_orc():
     if not st.session_state.agents_config: st.error("Empty!"); return
     k1 = st.session_state.get("OPENAI_API_KEY", os.environ.get("OPENAI_API_KEY"))
     k2 = st.session_state.get("GOOGLE_API_KEY", os.environ.get("GOOGLE_API_KEY"))
+    
     has_local = any(ag["model_config"]["api_type"] == "local" for ag in st.session_state.agents_config)
     if not has_local and not k1 and not k2: st.error(T["no_api"]); return
     
@@ -223,7 +216,7 @@ def start_orc():
 
 # --- UI STATES ---
 if not st.session_state.is_running:
-    if not st.session_state.agents_config: st.info(f"👋 {T['welcome']} {u}")
+    if not st.session_state.agents_config: st.info(f"👋 {T['welcome']}, {u}")
     with st.expander(f"{T['import_title']}", expanded=False):
         past = db.get_all_past_agents(u)
         if past:
@@ -233,7 +226,7 @@ if not st.session_state.is_running:
         else: st.caption(T["no_past_agent"])
     with st.expander(f"➕ {T['add_agent']}", expanded=True):
         c1, c2, c3, c4 = st.columns([2, 3, 2, 1])
-        n = c1.text_input(T["name"], placeholder="Scientist, Guide, Programmer"); r = c2.text_input(T["role"]); 
+        n = c1.text_input(T["name"], placeholder="Dev"); r = c2.text_input(T["role"]); 
         model_options = [m["label"] for m in st.session_state.available_models]
         m = c3.selectbox(T["model"], model_options)
         if c4.button(T["add_agent"], use_container_width=True):
@@ -261,7 +254,8 @@ if not st.session_state.is_running:
                     st.session_state.agents_config[i] = {"name": nn.replace(" ", "_"), "role": rr, "model_config": ns}
                     db.save_user_data(u, "team", st.session_state.agents_config); save_chat(); st.success("OK"); time.sleep(0.5); st.rerun()
                 if c_del.button("🗑️ " + T["delete"], key=f"dl{i}"): del_agent(i)
-    if st.button(f"🚀 {T['start_btn']}", type="primary", use_container_width=True): start_orc()
+    
+    if st.button(f"🚀 {T['start_btn']}", type="secondary", use_container_width=True): start_orc()
 
 else:
     with st.expander(f"🔒 {T['active_team']}"):
@@ -284,7 +278,8 @@ else:
         if st.button(T["stop_icon"], help=T["stop_task"], type="primary"): 
             st.session_state.processing = False; st.session_state.is_running = False; st.rerun()
     with c_in:
-        pr = st.chat_input(T["chat_input"], key="main_chat_unique")
+        # --- KARAKTER LİMİTİ AKTİF EDİLDİ ---
+        pr = st.chat_input(T["chat_input"], key="main_chat_unique", max_chars=config.MAX_CHAR_LIMIT)
     tph = st.empty()
     if st.session_state.terminal_logs and not st.session_state.get("processing", False):
         with tph.container():
@@ -292,22 +287,49 @@ else:
     if pr:
         st.session_state.processing = True
         
-        # --- AJANLAR ---
         k1 = st.session_state.get("OPENAI_API_KEY", os.environ.get("OPENAI_API_KEY"))
         k2 = st.session_state.get("GOOGLE_API_KEY", os.environ.get("GOOGLE_API_KEY"))
         lst = []; cfgs = []
         rag_info = f"\n\n[FILE CONTEXT]:\n{st.session_state.rag_content[:15000]}..." if st.session_state.rag_content else ""
-        
         team_members = st.session_state.agents_config
         roster = "\n".join([f"- {m['name']} ({m['role']})" for m in team_members])
+
+        safety_settings = [
+            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+        ]
+
+        base_config = {"max_tokens": 8192, "timeout": 600}
 
         for ag in st.session_state.agents_config:
             m_conf = ag["model_config"]
             if m_conf["api_type"] == "local":
-                cfg_dict = {"model": m_conf["model"], "api_key": "ollama", "base_url": m_conf.get("base_url", "http://localhost:11434/v1"), "api_type": "openai"}
+                cfg_dict = {
+                    "model": m_conf["model"], 
+                    "api_key": "ollama", 
+                    "base_url": m_conf.get("base_url", "http://localhost:11434/v1"), 
+                    "api_type": "openai",
+                    **base_config
+                }
+            elif m_conf["api_type"] == "google":
+                cfg_dict = {
+                    "model": m_conf["model"], 
+                    "api_key": k2, 
+                    "api_type": "google",
+                    "safety_settings": safety_settings,
+                    **base_config
+                }
             else:
-                k = k1 if m_conf["api_type"] == "openai" else k2
-                cfg_dict = {"model": m_conf["model"], "api_key": k, "api_type": m_conf["api_type"]}
+                current_key = k1 if m_conf["api_type"] == "openai" else k2 
+                cfg_dict = {
+                    "model": m_conf["model"], 
+                    "api_key": current_key, 
+                    "api_type": m_conf["api_type"],
+                    **base_config
+                }
+            
             lc = {"config_list": [cfg_dict]}
             if "o1-" not in m_conf["model"]: lc["temperature"] = tmp
             msg = f"""Sen {ag['name']}. Rolün: {ag['role']}.
@@ -321,16 +343,13 @@ else:
             lst.append(autogen.AssistantAgent(name=ag["name"], system_message=msg, llm_config=lc))
             cfgs.append(cfg_dict)
 
-        # --- USER PROXY (SONSUZ DÖNGÜYÜ ENGELLEMEK İÇİN FIX) ---
-        # 1. max_consecutive_auto_reply=0: Sadece 1 mesaj atar, sonra susar. Asla "Devam et" döngüsüne girmez.
         up = autogen.UserProxyAgent(
             name=u, 
             human_input_mode="NEVER", 
             code_execution_config=False, 
-            max_consecutive_auto_reply=0, # <--- KRİTİK FIX: Sadece 1 kez konuşur (Start)
-            default_auto_reply="..." # Kullanılmayacak çünkü limit 0
+            max_consecutive_auto_reply=0,
+            default_auto_reply="..." 
         )
-        # up listeye eklenmez, sadece tetikleyici
 
         with tph.container():
             with st.expander(f"📺 {T['terminal']} ({T['working']})", expanded=False):
@@ -340,9 +359,8 @@ else:
                 with cc: 
                     with st.chat_message(u, avatar=av): st.write(f"**{u}** (Msg #{len(st.session_state.chat_history)})"); st.markdown(pr)
                 save_chat()
-                rag_app = "" # Tekrar etmesin diye boş
+                rag_app = ""
                 
-                # --- TUR HESABI (DÖNGÜ BAZLI) ---
                 num_agents = len(st.session_state.agents_config)
                 if num_agents == 0: num_agents = 1
                 curr_msgs = len(st.session_state.chat_history) # User dahil toplam tarihçe
@@ -356,10 +374,9 @@ else:
                 if len(st.session_state.chat_history) > 2:
                     msg = f"{T['feedback_label']} {pr} {rag_app}"
                 
-                st.info(f"{T['round_info']}: +{add_msgs} Msg (Total: {tgt}) | Agents: {num_agents}")
+                st.info(f"{T['round_info']}: +{add_msgs} Msg (Total: {tgt}) | Agents: {num_agents}")                
                 
-                # GroupChat oluştururken geçmiş mesajları veriyoruz
-                h_msgs = [{"role": "user" if m["name"]==u else "assistant", "content": m["content"], "name": m["name"]} for m in st.session_state.chat_history[:-1]] # Son mesajı hariç tut, çünkü initiate_chat ile gidecek
+                h_msgs = [{"role": "user" if m["name"]==u else "assistant", "content": m["content"], "name": m["name"]} for m in st.session_state.chat_history[:-1]]
                 
                 gc = autogen.GroupChat(agents=lst, messages=h_msgs, max_round=tgt, speaker_selection_method=smeth)
                 mgr = autogen.GroupChatManager(groupchat=gc, llm_config={"config_list": cfgs, "temperature": tmp})
