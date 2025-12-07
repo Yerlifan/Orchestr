@@ -28,13 +28,31 @@ def load_css(theme_color, bg_color):
             border: 1px solid {theme_color}44;
         }}
         
-        /* Butonlar */
+        /* --- BUTON STİLLERİ (MAVİ YAPILDI) --- */
+        
+        /* 1. Varsayılan (Secondary) Butonlar */
         div.stButton > button:first-child {{ 
-            border-color: rgba(255,255,255,0.1); color: #EEE; 
-            background: rgba(255,255,255,0.02); border-radius: 8px; 
+            border-color: rgba(255,255,255,0.1); 
+            color: #EEE; 
+            background: rgba(255,255,255,0.02); 
+            border-radius: 8px; 
         }}
         div.stButton > button:first-child:hover {{ 
-            border-color: {theme_color}; color: white; background: {theme_color}22; 
+            border-color: {theme_color}; 
+            color: white; 
+            background: {theme_color}22; 
+        }}
+
+        /* 2. Primary Butonlar (STOP butonu için MAVİ) */
+        div.stButton > button[kind="primary"] {{
+            background-color: #2196F3 !important; /* MAVİ */
+            border-color: #2196F3 !important;
+            color: white !important;
+        }}
+        div.stButton > button[kind="primary"]:hover {{
+            background-color: #1976D2 !important; /* KOYU MAVİ (Hover) */
+            border-color: #1976D2 !important;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
         }}
         
         /* Login Kartı */
@@ -78,10 +96,12 @@ class StreamlitOutputStream:
     def __init__(self, c):
         self.c = c
         self.ansi = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')
+    
     def write(self, d): 
         if "terminal_logs" in st.session_state:
             st.session_state.terminal_logs += self.ansi.sub('', d)
             self.c.code(st.session_state.terminal_logs, language="yaml")
+    
     def flush(self):
         pass
 
